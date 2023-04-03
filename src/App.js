@@ -4,7 +4,7 @@ export class App extends Component{
   render(){
     return(
       <div>
-        Incercare1
+        Incercare12
       </div>
     )
   }
