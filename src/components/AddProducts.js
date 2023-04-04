@@ -1,4 +1,6 @@
 import React,{useState} from "react"
+import {storage, db} from '../config/Config'
+import { snapshotEqual } from "firebase/firestore";
 
 export const AddProducts = () => {
 
@@ -16,7 +18,8 @@ export const AddProducts = () => {
                 setProductImg(selectedFile);
                 setError('');
             }
-    else{
+    else
+        {
                 setProductImg(null);
                 setError('Please select a valid image type!!')
         }
@@ -24,7 +27,28 @@ export const AddProducts = () => {
 
     const addProduct =(e) =>{
         e.preventDefault();
-        console.log(productName, productPrice, productImg)
+        //console.log(productName, productPrice, productImg)
+        const uploadTask= storage.ref(`product-images/${productImg.productName}`).put(productImg);
+        uploadTask.on('state_changed',snapshot=>{
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(progress);
+        }, err=>{
+            setError(err.message)
+        }, () => {
+            storage.ref('product-images').child(productImg.name).getDownloadURL().then(url => {
+                db.collection('Product').add({
+                    productName: productName,
+                    productPrice: productPrice,
+                    productImg: url
+                }).then(() => {
+                    setProductName('');
+                    setProductPrice=(0);
+                    setProductImg('');
+                    setError('');
+                    document.getElementById('file').value = '';
+                }).catch(err => setError(err.message));
+            })
+        })
     }
 
     return(
@@ -44,7 +68,7 @@ export const AddProducts = () => {
                 <label htmlFor="product-img">Product Image</label> <br />
             
                 <input type="file" className="form-control" 
-                    onChange={productImgHandler}/> <br />
+                    onChange={productImgHandler} id='file'/> <br />
                 <button className="btn btn-success btn-md mybtn">ADD</button>
             </form>
             {error && <span>{error}</span>}
