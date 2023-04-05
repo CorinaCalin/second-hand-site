@@ -5,14 +5,40 @@ import { AddProducts } from './components/AddProducts'
 import { ProductsContextProvider } from './global/ProductsContext';
 import { Signup } from './components/Singup';
 import { Login } from './components/Login';
+import { auth, db } from './config/Config'
 
 export class App extends Component{
+
+  state={
+    user: null
+  }
+ 
+  componentDidMount() {
+
+    // getting user info for navigation bar
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            db.collection('SignedUpUsersData').doc(user.uid).get().then(snapshot => {
+                this.setState({
+                    user: snapshot.data().Name
+                })
+            })
+        }
+        else {
+            this.setState({
+                user: null
+            })
+        }
+    })
+
+}
+
   render(){
     return(
     <ProductsContextProvider>
       <BrowserRouter>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={() => <Home user={this.state.user} />} />
             <Route path='/addproducts' component={AddProducts} />  
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />    
