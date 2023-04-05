@@ -1,5 +1,8 @@
 import React,{useState} from "react"
-export const Signup = () => {
+import { auth, db } from "../config/Config";
+import { Link } from "react-router-dom";
+
+export const Signup = (props) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -8,8 +11,21 @@ export const Signup = () => {
 
     const Signup = (e) => {
         e.preventDefault();
-        console.log('form submitted');
-        console.log(name, email, password);
+        //console.log('form submitted');
+        //console.log(name, email, password);
+        auth.createUserWithEmailAndPassword(email,password).then((cred)=>{
+            db.collection('SignedUpUsersData').doc(cred.user.uid).set({
+                Name: name,
+                Email: email,
+                Password: password
+            }).then(()=>{
+                setName('');
+                setEmail('');
+                setPassword('');
+                setError('');
+                props.history.push('/login');
+            }).catch(err=>setError(err.message));
+        }).catch(err=>setError(err.message));
     }
 
     return(
@@ -34,6 +50,10 @@ export const Signup = () => {
                     <button type="submit" className="btn btn-success btn-md mybtn">REGISTER</button>
                 </form>
                 {error && <div className="error-msg">{error}</div>}  
+                <br/>
+
+            <span>Already have an account? LOGIN</span>
+                <Link to="login">HERE</Link>
         </div>
     )
 }
