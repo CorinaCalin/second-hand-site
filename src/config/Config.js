@@ -10,14 +10,14 @@ import "firebase/compat/storage";
 //import 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDooe2m15T-tXP7IIjhSl7DgwMpqoJjuOs",
-    authDomain: "ecommerce-site-1b96c.firebaseapp.com",
-    projectId: "ecommerce-site-1b96c",
-    storageBucket: "ecommerce-site-1b96c.appspot.com",
-    messagingSenderId: "132381525765",
-    appId: "1:132381525765:web:a3ed74225da3e94fb7996c",
-    measurementId: "G-KQ2HWWD6P8"
-  };
+  apiKey: "AIzaSyDfs-7O3yQya3dnsNktdwywIXFvnxlAIf0",
+  authDomain: "ecommerce-site-2d86f.firebaseapp.com",
+  projectId: "ecommerce-site-2d86f",
+  storageBucket: "ecommerce-site-2d86f.appspot.com",
+  messagingSenderId: "397951983231",
+  appId: "1:397951983231:web:71e0f652fadd25c6a9294a",
+  measurementId: "G-WP2846J5F4"
+};
 
 firebase.initializeApp(firebaseConfig);
 

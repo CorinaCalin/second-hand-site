@@ -1,6 +1,5 @@
 import React,{useState} from "react"
 import {storage, db} from '../config/Config'
-import { snapshotEqual } from "firebase/firestore";
 
 export const AddProducts = () => {
 
@@ -14,7 +13,7 @@ export const AddProducts = () => {
     const productImgHandler =(e) => {
         let selectedFile = e.target.files[0];
 
-    if(selectedFile && types.includes(selectedFile)){
+    if(selectedFile && types.includes(selectedFile.type)){
                 setProductImg(selectedFile);
                 setError('');
             }
@@ -28,18 +27,18 @@ export const AddProducts = () => {
     const addProduct =(e) =>{
         e.preventDefault();
         //console.log(productName, productPrice, productImg)
-        const uploadTask= storage.ref(`product-images/${productImg.productName}`).put(productImg);
-        uploadTask.on('state_changed',snapshot=>{
+        const uploadTask= storage.ref(`product-images/${productImg.name}`).put(productImg);
+        uploadTask.on('state_changed',snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log(progress);
-        }, err=>{
+        }, err => {
             setError(err.message)
         }, () => {
             storage.ref('product-images').child(productImg.name).getDownloadURL().then(url => {
-                db.collection('Product').add({
-                    productName: productName,
-                    productPrice: productPrice,
-                    productImg: url
+                db.collection('Products').add({
+                    ProductName: productName,
+                    ProductPrice: productPrice,
+                    ProductImg: url
                 }).then(() => {
                     setProductName('');
                     setProductPrice=(0);
