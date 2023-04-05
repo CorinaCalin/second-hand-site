@@ -9,8 +9,8 @@ return(
             <img src={logo} alt=""/>
         </div>
         <div className='rightside'>
-        <Link to='/signup' className='navlinks'>Sign UP</Link>
-        <Link to='/login' className='navlinks'>LOGIN</Link>
+        <Link to='signup' className='navlinks'>Sign UP</Link>
+        <Link to='login' className='navlinks'>LOGIN</Link>
     </div>
         </div>
 )
