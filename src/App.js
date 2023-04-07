@@ -36,15 +36,17 @@ export class App extends Component{
   render(){
     return(
     <ProductsContextProvider>
-      <BrowserRouter>
+      <ProductsContextProvider>
+        <BrowserRouter>
           <Switch>
             <Route exact path='/' component={() => <Home user={this.state.user} />} />
             <Route path='/addproducts' component={AddProducts} />  
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />    
           </Switch> 
-      </BrowserRouter>
+        </BrowserRouter>
       </ProductsContextProvider>
+    </ProductsContextProvider>
     )
   }
 }

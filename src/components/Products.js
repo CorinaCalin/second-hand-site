@@ -1,11 +1,15 @@
 import React,{useContext}  from 'react'
 import { ProductsContext } from '../global/ProductsContext'
+import { CartContext } from '../global/CartContext';
 
 
 export const Products = () => {
 
     const {products} = useContext(ProductsContext);
-    console.log(products);
+    //console.log(products);
+
+    const data = useContext(CartContext);
+    console.log(data);
 
 return(
     <>
