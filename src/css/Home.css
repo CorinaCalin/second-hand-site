@@ -104,3 +104,24 @@ h1 {
     margin-bottom: 2px;
     outline: none;
 }
+.navbox .rightside .relative{
+    position: relative;
+}
+
+/*for showing the number of products */
+.navbox .rightside .relative .number_of_products {
+    background: #9066e5;
+    color: #e5f0d1;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    position: absolute;
+    top: -5px;
+    right: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
