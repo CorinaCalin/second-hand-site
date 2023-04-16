@@ -8,6 +8,7 @@ import { Login } from './components/Login';
 import { auth, db } from './config/Config';
 import { Cart } from './components/Cart';
 import { CartContextProvider } from './global/CartContext';
+import { Cashout } from './components/Cashout';
 
 export class App extends Component{
 
@@ -46,6 +47,8 @@ export class App extends Component{
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />    
             <Route path='/cartproducts' component={()=> <Cart user={this.state.user}/>} />
+            <Route path='/cashout' component={()=> <Cashout user={this.state.user}/>} />
+ 
           </Switch> 
         </BrowserRouter>
       </CartContextProvider>
