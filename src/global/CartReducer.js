@@ -1,5 +1,5 @@
 /*for showing an alert for adding existing product */
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
@@ -43,6 +43,47 @@ export const CartReducer = (state, action) =>{
                 shoppingCart: [product, ...shoppingCart], totalPrice: updatedPrice, totalQty: updatedQty
             }
         }
-        break;
+            /* for increasing of products*/
+        case 'INC':
+            product = action.cart;
+            product.qty = ++product.qty;
+            product.TotalProductPrice = product.qty * product.ProductPrice;
+            updatedQty = totalQty + 1;
+            updatedPrice = totalPrice + product.ProductPrice;
+            index = shoppingCart.findIndex(cart => cart.ProductID === action.id);
+            shoppingCart[index] = product;
+            return {
+                shoppingCart: [...shoppingCart], totalPrice: updatedPrice, totalQty: updatedQty
+            }
+
+                /* for decresing of products*/
+            case 'DEC':
+                product = action.cart;
+                if (product.qty > 1) {
+                    product.qty = product.qty - 1;
+                    product.TotalProductPrice = product.qty * product.ProductPrice;
+                    updatedPrice = totalPrice - product.ProductPrice;
+                    updatedQty = totalQty - 1;
+                    index = shoppingCart.findIndex(cart => cart.ProductID === action.id);
+                    shoppingCart[index] = product;
+                    return {
+                        shoppingCart: [...shoppingCart], totalPrice: updatedPrice, totalQty: updatedQty
+                    }
+                }
+                else {
+                    return state;
+                }
+                    /* for deleting of products*/
+            case 'DELETE':
+                const filtered = shoppingCart.filter(product => product.ProductID !== action.id);
+                product = action.cart;
+                updatedQty = totalQty - product.qty;
+                updatedPrice = totalPrice - product.qty * product.ProductPrice;
+                return {
+                    shoppingCart: [...filtered], totalPrice: updatedPrice, totalQty: updatedQty
+                }
+                  
+            default:
+                return state;
     }
 }
